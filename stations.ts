@@ -4,18 +4,23 @@ const stations = [
   [20, 20, 5],
   [10, 0, 12]
 ]
-
+type station =  {
+  x: number,
+  y: number,
+  reach: number,
+  power: number
+}
 function findOptimalStation(x: number, y: number, stations: number[][]): string{
-  const stationsWithPower: number[][] = stations
-  .map( station => station.concat([calculatePower(station, [x,y])]))
+  const stationsWithPower: station[] = stations
+  .map( station => ({x: station[0], y: station[1], reach: station[2], power: calculatePower(station, [x,y])}))
   .sort((a, b)=>{
-    return b[3] - a[3]
+    return b.power - a.power
   })
   const optimalStation = stationsWithPower[0];
-  if(optimalStation[3] < 0){
+  if(optimalStation.power < 0){
     return `No link station within reach for point ${x},${y}`
   }
-  return `Best link station for point ${x},${y} is ${optimalStation[0]},${optimalStation[1]} with power ${optimalStation[3]}`;
+  return `Best link station for point ${x},${y} is ${optimalStation.x},${optimalStation.y} with power ${optimalStation.power}`;
 }
 
 function calculatePower(station :number[], point :number[]): number {
