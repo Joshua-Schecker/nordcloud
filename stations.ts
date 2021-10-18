@@ -17,7 +17,7 @@ function findOptimalStation(x: number, y: number, stations: number[][]): string{
     return b.power - a.power
   })
   const optimalStation = stationsWithPower[0];
-  if(optimalStation.power < 0){
+  if(optimalStation.power <= 0){
     return `No link station within reach for point ${x},${y}`
   }
   return `Best link station for point ${x},${y} is ${optimalStation.x},${optimalStation.y} with power ${optimalStation.power}`;
